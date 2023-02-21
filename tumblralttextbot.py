@@ -1,9 +1,11 @@
-#GOOGLE SETUP
 import requests
 import io
 from io import BytesIO
 from PIL import Image
+import time
 
+
+#GOOGLE SETUP
 from google.cloud import vision
 client = vision.ImageAnnotatorClient()
 
