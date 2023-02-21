@@ -34,7 +34,7 @@ imageget= re.search('(https?:\/\/.*?\.(?:png|jpg))', firstpost.get('body'))
 
 #IF TAGGED POST WITH IMAGE IS FOUND
 
-if imageget.group(0):
+if imageget:
 
     uri=imageget.group(0)
 
@@ -58,3 +58,5 @@ if imageget.group(0):
 
         tumblrclient.reblog(botblog, id=firstpost['id'], reblog_key=firstpost['reblog_key'],
                 state='published', tags=['use tag alttextbot to get text from images'], comment=imagetext)
+        
+exit()
