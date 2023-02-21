@@ -25,17 +25,23 @@ botblog = !!!! YOUR BOT BLOG NAME AS STRING HERE !!!!
 
 while True:
 
+  taggedposts = tumblrclient.tagged('alttextbot', limit=1, filter='raw')
 
-    taggedposts = tumblrclient.tagged('alttextbot', limit=1, filter='raw')
+  #IF TAGGED POST IS FOUND
+  if taggedposts[0]:
+
     firstpost=taggedposts[0]
 
     postblog = firstpost.get('blog')
-
     postuuid = postblog.get('uuid')
     postid = firstpost.get('id')
     postkey = firstpost.get('reblog_key')
 
-    imageget= re.search('(https?:\/\/.*?\.(?:png|jpg))', firstpost.get('body'))
+    print(firstpost.get('photos'))
+
+    imageget = re.search('(https?:\/\/.*?\.(?:png|jpg))', str(firstpost.get('photos')))
+
+    print(imageget)
 
     #IF TAGGED POST WITH IMAGE IS FOUND
 
