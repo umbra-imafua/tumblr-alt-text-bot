@@ -23,42 +23,45 @@ botblog = !!!! YOUR BOT BLOG NAME AS STRING HERE !!!!
 
 #FIND TAGS
 
-taggedposts = tumblrclient.tagged('alttextbot', limit=1, filter='raw')
-firstpost=taggedposts[0]
+while True:
 
-postblog = firstpost.get('blog')
 
-postuuid = postblog.get('uuid')
-postid = firstpost.get('id')
-postkey = firstpost.get('reblog_key')
+    taggedposts = tumblrclient.tagged('alttextbot', limit=1, filter='raw')
+    firstpost=taggedposts[0]
 
-imageget= re.search('(https?:\/\/.*?\.(?:png|jpg))', firstpost.get('body'))
+    postblog = firstpost.get('blog')
 
-#IF TAGGED POST WITH IMAGE IS FOUND
+    postuuid = postblog.get('uuid')
+    postid = firstpost.get('id')
+    postkey = firstpost.get('reblog_key')
 
-if imageget:
+    imageget= re.search('(https?:\/\/.*?\.(?:png|jpg))', firstpost.get('body'))
 
-    uri=imageget.group(0)
+    #IF TAGGED POST WITH IMAGE IS FOUND
 
-    #dl image to variable inram
-    content = requests.get(uri).content
+    if imageget:
 
-    #send to google to extract text and store responce annotations
-    image = vision.Image(content=content)
-    response = client.text_detection(image=image)
-    alltexts = response.text_annotations
-    imagetext = alltexts[0].description
+        uri=imageget.group(0)
 
-    #IF NOT ERROR THEN POST OUR REBLOG
+        #dl image to variable inram
+        content = requests.get(uri).content
 
-    if response.error.message:
-        raise Exception(
-            '{}\nFor more info on error messages, check: '
-            'https://cloud.google.com/apis/design/errors'.format(
-                response.error.message))
-    else:
+        #send to google to extract text and store responce annotations
+        image = vision.Image(content=content)
+        response = client.text_detection(image=image)
+        alltexts = response.text_annotations
+        imagetext = alltexts[0].description
 
-        tumblrclient.reblog(botblog, id=firstpost['id'], reblog_key=firstpost['reblog_key'],
-                state='published', tags=['use tag alttextbot to get text from images'], comment=imagetext)
-        
-exit()
+        #IF NOT ERROR THEN POST OUR REBLOG
+
+        if response.error.message:
+            raise Exception(
+                '{}\nFor more info on error messages, check: '
+                'https://cloud.google.com/apis/design/errors'.format(
+                    response.error.message))
+        else:
+
+            tumblrclient.reblog(botblog, id=firstpost['id'], reblog_key=firstpost['reblog_key'],
+                    state='published', tags=['use tag alttextbot to get text from images'], comment=imagetext)
+
+    time.sleep(30)
