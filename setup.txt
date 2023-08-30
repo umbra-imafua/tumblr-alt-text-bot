@@ -1,0 +1,27 @@
+https://codelabs.developers.google.com/codelabs/cloud-vision-api-python#4 GET JSON KEY AGAIN IF NEEDED AND PUT IN FOLDER HERE
+
+##############################
+#CREATE A PYTHON INSTANCE IN PROJECT AND SET UP GOOGLE AND TUMBLR
+##############################
+
+cd into the projects directory
+
+python3 -m venv env
+
+    source env/bin/activate
+
+    pip install google-cloud-storage
+    pip install --upgrade google-cloud-storage
+    pip install -U pip google-cloud-vision
+    pip install pytumblr
+    pip install pillow
+
+#EXIT WITH
+deactivate
+
+##############################
+
+BEFORE RUNNING MANUALLY
+source env/bin/activate
+
+##############################
